@@ -1,0 +1,8 @@
+---
+
+- name: example of regex_replace in var
+  hosts: localhost
+  tasks:
+  - name: print mac address with dashes
+    debug:
+      msg: mac address is {{ ansible_default_ipv4.macaddress | regex_replace(':', '-') }}

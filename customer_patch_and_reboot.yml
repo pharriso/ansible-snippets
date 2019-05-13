@@ -1,0 +1,22 @@
+---
+
+- name: patch and reboot linux servers
+  hosts: all
+  gather_facts: true
+  tasks:
+
+  - name: update content view
+
+  - name: check for updates
+
+  - name: run pre-script
+
+  - name: reboot
+
+  - name: run script
+
+  - name: yum update
+
+  - name: reboot
+
+  - name: script
