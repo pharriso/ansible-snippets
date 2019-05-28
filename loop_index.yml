@@ -1,0 +1,16 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: print index
+    debug:
+      msg: loop item is {{ item }} with index {{ my_index }}
+    loop:
+      - a
+      - b
+      - c
+    loop_control:
+      index_var: my_index
+
