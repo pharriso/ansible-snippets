@@ -5,7 +5,49 @@
   gather_facts: true
   tasks:
 
-  - name: update content view
+  - name: get host id from satellite
+    uri:
+      url: "{{ sat_url }}/api/v2/hosts?search={{ inventory_hostname }}"
+      validate_certs: false
+      method: GET
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json,version=2"
+      user: "{{ sat_user }}"
+      password: "{{ sat_password }}"
+      force_basic_auth: yes
+      status_code: 200
+    register: host_id
+
+  - name: get content view id from satellite
+    uri:
+      url: "{{ sat_url }}/katello/api/content_views?search={{ content_view_name }}"
+      validate_certs: false
+      method: GET
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json,version=2"
+      user: "{{ sat_user }}"
+      password: "{{ sat_password }}"
+      force_basic_auth: yes
+      status_code: 200
+    register: content_view_id
+
+  - name: update content view of host
+    uri:
+      url: "{{ sat_url }}/api/v2/hosts/{{ host_id.json.results[0].id }}"
+      validate_certs: false
+      method: PUT
+      headers:
+        Content-Type: "application/json"
+        Accept: "application/json,version=2"
+      body: {"host": {"content_facet_attributes": {"content_view_id": "{{ content_view_id.json.results[0].id }}"}}}
+      body_format: json
+      user: "{{ sat_user }}"
+      password: "{{ sat_password }}"
+      force_basic_auth: yes
+      status_code: 200
+    when: "host_id.json.results[0].content_facet_attributes.content_view_id != content_view_id.json.results[0].id"
 
   - name: check for updates
 

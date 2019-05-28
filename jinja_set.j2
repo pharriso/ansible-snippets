@@ -1,0 +1,4 @@
+Nice way to get the vars from a host in a group via jinja
+
+{% set db_head_node = groups['towerdb'][0] %}
+{{ hostvars[db_head_node].ansible_fqdn }}
