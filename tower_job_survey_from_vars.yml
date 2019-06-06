@@ -1,0 +1,28 @@
+---
+
+- name: create tower job with survey from list of mount points on server
+  hosts: web1
+  tasks:
+  - name: initialise array
+    set_fact:
+      all_mounts: []
+    delegate_to: localhost
+
+  - name: set mount points as single var
+    set_fact:
+      all_mounts: "{{ all_mounts + [ item.mount ] }}"
+    loop: "{{ ansible_mounts }}"
+    delegate_to: localhost
+
+  - name: create tower job template with survey
+    tower_job_template:
+      name: "Dynamic Survey"
+      job_type: "run"
+      inventory: "Demo"
+      project: "Scan"
+      playbook: "scan_facts.yml"
+      state: "present"
+      tower_verify_ssl: false
+      survey_enabled: yes
+      survey_spec: "{{ lookup('template', 'gen_survey.j2') }}"
+    delegate_to: localhost
