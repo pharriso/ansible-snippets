@@ -1,0 +1,5 @@
+---
+
+- name: show variable from common_vars role
+  debug:
+    msg: port from common_vars role is {{ port }} and version is {{ appversion }}
