@@ -13,9 +13,6 @@
   roles:
   - db
 
-  tags:
-  - db
-
 # Configure and deploy the web servers. Note that we include two roles here,
 # the 'base-apache' role which simply sets up Apache, and 'web' which includes
 # our example web application.
@@ -25,17 +22,11 @@
   - base-apache
   - web
 
-  tags:
-  - web
-
 # Configure and deploy the load balancer(s).
 - hosts: lbservers
 
   roles:
   - haproxy
-
-  tags:
-  - lb
 
 # Configure and deploy the Nagios monitoring node(s).
 - hosts: monitoring
@@ -43,6 +34,3 @@
   roles:
   - base-apache
   - nagios
-
-  tags:
-  - monitoring
