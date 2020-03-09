@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: print vars
+    debug:
+      var: hostvars 
+    run_once: true
+
+  - name: write vars to file
+    copy:
+      dest: /tmp/ansible_vars.yml
+      content: "{{ hostvars | to_nice_yaml }}"
+    run_once: true
