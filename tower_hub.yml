@@ -1,0 +1,11 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - f5networks.f5_modules
+  tasks:
+    - name: print something
+      debug:
+        msg: something
