@@ -6,6 +6,7 @@
   collections:
     - f5networks.f5_modules
   tasks:
-    - name: print something
-      debug:
-        msg: something
+    - name: bigip vlan
+      bigip_vlan:
+        name: net1
+
