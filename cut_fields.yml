@@ -1,0 +1,10 @@
+---
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  vars: 
+    ip: server.demolab.local
+  tasks:
+  - debug: 
+      msg: ip is {{ ip.split('.', 1)[1] }}
