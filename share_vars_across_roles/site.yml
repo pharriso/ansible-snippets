@@ -1,7 +1,0 @@
----
-
-- hosts: all
-  roles:
-  - common_vars
-  - role1
-  - role2

@@ -1,5 +1,0 @@
----
-
-- name: print location loaded from location file in common_vars role
-  debug:
-    msg: location is {{ applocation }}
