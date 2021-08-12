@@ -4,7 +4,11 @@
   connection: local
   gather_facts: false
   vars: 
-    ip: server.demolab.local
+    hostname: server.pat.demolab.local
+    domain: demolab.local
   tasks:
   - debug: 
-      msg: ip is {{ ip.split('.', 1)[1] }}
+      msg: domain is {{ hostname.split('.', 1)[1] }}
+
+  - debug: 
+      msg: hostname is {{ hostname.split('.')[:-2] | join('.') }}

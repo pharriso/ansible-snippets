@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  connection: local
+  tasks:
+  - name: Print shortname
+    debug:
+      msg: short name is {{ inventory_hostname.split('.')[0] }}
