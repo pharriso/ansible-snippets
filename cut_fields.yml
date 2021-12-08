@@ -7,8 +7,19 @@
     hostname: server.pat.demolab.local
     domain: demolab.local
   tasks:
+  - debug:
+      msg: number of elements is {{ hostname.split('.') | length }}
   - debug: 
       msg: domain is {{ hostname.split('.', 1)[1] }}
 
   - debug: 
       msg: hostname is {{ hostname.split('.')[:-2] | join('.') }}
+
+  - debug: 
+      msg: domain is {{ hostname.split('.')[1:] | join('.') }}
+
+  - debug: 
+      msg: second field is {{ hostname.split('.')[-3] }}
+
+  - debug: 
+      msg: last field is {{ hostname.split('.')[-1] }}
