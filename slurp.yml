@@ -1,0 +1,19 @@
+---
+
+- name: grab contents of file and write it somewhere
+  hosts: all
+  tasks:
+  - name: slurp file
+    ansible.builtin.slurp:
+      src: /etc/fstab
+    register: etc_fstab
+
+  - name: print something first
+    debug:
+      msg: "{{ etc_fstab.content | b64decode }}"
+
+  - name: write it somewhere
+    copy:
+      dest: /tmp/fstab
+      content: "{{ etc_fstab.content | b64decode }}"
+    delegate_to: localhost
