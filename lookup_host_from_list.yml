@@ -1,0 +1,30 @@
+---
+
+- hosts: all
+  gather_facts: no
+  vars:
+    south_sites:
+      - END
+      - TCR
+      - MOS
+  tasks:
+  - name: set fact for location
+    set_fact: 
+      hostname_location: "{{ inventory_hostname[:3] }}"
+
+  - debug:
+      var: hostname_location
+
+  - name: set fact for south
+    set_fact:
+      location: south
+    when: "hostname_location in south_sites" 
+
+  - name: set fact for north
+    set_fact:
+      location: north
+    when: "hostname_location not in south_sites" 
+
+  - name: print message
+    debug:
+      msg: server is in the {{ location }}
