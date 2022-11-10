@@ -1,0 +1,13 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: print contents of CA cert
+    debug:
+      msg: "{{ lookup('ansible.builtin.url', 'http://sat6.demolab.local/pub/demolab-ca.crt', split_lines=False) }}"
+
+  - name: write it to a file
+    copy:
+      dest: /tmp/demolab-ca.crt
+      content: "{{ lookup('ansible.builtin.url', 'http://sat6.demolab.local/pub/demolab-ca.crt', split_lines=False) }}"
