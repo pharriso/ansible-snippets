@@ -1,0 +1,31 @@
+---
+
+- hosts: all
+  gather_facts: false
+  vars:
+    reg_keys:
+    - path: HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client
+      reg_key_data:
+      - name: AllowBasic
+        type: dword
+        data: 00000000
+      - name: AllowUnencryptedTraffic
+        type: dword
+        data: 00000000
+      - name: AllowDigest
+        type: dword
+        data: 00000000
+    - path: HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging
+      reg_key_data:
+      - name: EnableScriptBlockLogging
+        type: dword
+        data: 00000000
+
+  tasks:
+  - name: configure windows registry
+    ansible.windows.win_regedit:
+      path: "{{ item.0.path }}"
+      name: "{{ item.1.name }}"
+      data: "{{ item.1.data }}"
+      type: "{{ item.1.type }}"
+    loop: "{{ reg_keys | subelements('reg_key_data') }}"
