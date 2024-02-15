@@ -1,0 +1,32 @@
+---
+- name: Export projects
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.controller
+  environment:
+     CONTROLLER_HOST: https://tower.example.com
+     CONTROLLER_USERNAME: admin
+     CONTROLLER_PASSWORD: 
+     CONTROLLER_VERIFY_SSL: False
+
+  tasks:
+    - name: Export projects
+      ansible.controller.export: # or ansible.controller.export
+        projects: all
+      register: export_results
+
+
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  environment:
+     CONTROLLER_HOST: https://controller.example.com
+     CONTROLLER_USERNAME: admin
+     CONTROLLER_PASSWORD: 
+     CONTROLLER_VERIFY_SSL: False
+  tasks:
+  - name: Load data from a json file created by a command like awx export --organ>
+    ansible.controller.import:
+      assets: "{{ export_results.assets }}"

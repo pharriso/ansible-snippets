@@ -1,0 +1,7 @@
+---
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+  ansible.builtin.pause:
+    seconds: "{{ sleep_time | default(60) }}"
