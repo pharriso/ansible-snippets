@@ -4,10 +4,6 @@
   tasks:
   - name: add hosts to cmdb
     servicenow.itsm.configuration_item:
-      instance:
-        username: "{{ snow_user }}"
-        password: "{{ snow_password }}"
-        host: "https://{{ snow_instance }}.service-now.com"
       name: "{{ ansible_fqdn }}"
       sys_class_name: cmdb_ci_linux_server
       other:
